@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 
 export const NameGame = ({answer}: {answer: string})=> { 
-    const [guesses, setGuesses] = useState([])
+    const [guesses, setGuesses] = useState<string[]>([])
     const [name, setName] = useState('')
     
 
@@ -15,14 +15,20 @@ export const NameGame = ({answer}: {answer: string})=> {
     }
 
     useEffect(()=> {
-        const handleUserKeyPress = (event)=> {
+        const handleUserKeyPress = (event: {keyCode: number})=> {
             let name = ''
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
             document.querySelectorAll('input.current-guess').forEach(d => name += d.value)
             if (event.keyCode === 13 && name.length === 5) {
                 if (allowedNames.includes(name.toUpperCase())) {
                     setGuesses((guesses)=> guesses.concat(name.toUpperCase()))
                     setName('')
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
                     document.querySelectorAll('input.current-guess').forEach(d => d.value = '')
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
                     document.querySelectorAll('input.current-guess')[0].focus()
                 } else {
                     toast(<div><b>{name}</b><span>{" er ekki 5 stafa nafn samkvæmt þessum "}</span><a style={{color: 'blue', textDecoration: 'underline'}} href="https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_eiginn%C3%B6fn_karlmanna">{"lista"}</a></div>)
@@ -37,9 +43,9 @@ export const NameGame = ({answer}: {answer: string})=> {
     }, [])
 
     return <div>
-        {guesses.map((guess: string) => {
+        {guesses.map((guess: string, i) => {
             const word = answer.split('')
-            return <div>{
+            return <div key={guess + i}>{
                 guess.split('').map((character, index) => {
                     let correct = false
                     if (word[index] === character) {
@@ -50,7 +56,7 @@ export const NameGame = ({answer}: {answer: string})=> {
                         character,
                         correct
                     }
-                }).map(({character, correct}) => {
+                }).map(({character, correct}, index) => {
                 let isInWord = false
                 if (!correct) {
                     const indexInWord = word.indexOf(character)
@@ -59,7 +65,7 @@ export const NameGame = ({answer}: {answer: string})=> {
                         isInWord = true
                     }
                 }
-                return <input value={character} style={{
+                return <input key={index} value={character} style={{
                     justifyContent: 'space-between',
                     width: '45px',
                     height: '45px',
@@ -82,9 +88,6 @@ export const NameGame = ({answer}: {answer: string})=> {
         { className: "2fa-box current-guess",
             style: { "color": "black" },
             placeholder: "_",
-            onChange: (event)=> {
-                console.log(event)
-            }
         }
         }
         inputRegExp={/./}
@@ -93,7 +96,11 @@ export const NameGame = ({answer}: {answer: string})=> {
         if (allowedNames.includes(name.toUpperCase())) {
             setGuesses(guesses.concat(name.toUpperCase()))
             setName('')
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
             document.querySelectorAll('input.current-guess').forEach(d => d.value = '')
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
             document.querySelectorAll('input.current-guess')[0].focus()
         } else {
             toast(<div><b>{name}</b><span>{" er ekki 5 stafa nafn samkvæmt þessum "}</span><a style={{color: 'blue', textDecoration: 'underline'}} href="https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_eiginn%C3%B6fn_karlmanna">{"lista"}</a></div>)
