@@ -35,9 +35,9 @@ export default function RootLayout({
         <div className="grid grid-rows-[20px_20px_1fr] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <h2 style={{fontSize: '36px', fontWeight: 500, width: '100%', textAlign: 'center', margin: '20px 0', color: '#FFF'}}>Jónsson orðla</h2>
         <div className="flex gap-6 flex-wrap items-center justify-center" style={{position: "sticky"}}>
-          <a className={`navigation active`} href="/">Forsíða</a>
-          <a className={`navigation `}  href="/name/first">Fornafn</a>
-          <a className={`navigation `} href="/name/second">Millinafn</a>
+          <a className={`navigation active`} href="/name-game">Forsíða</a>
+          <a className={`navigation `}  href="/name-game/name/first">Fornafn</a>
+          <a className={`navigation `} href="/name-game/name/second">Millinafn</a>
        </div>
         {children}
         <ToastContainer />
