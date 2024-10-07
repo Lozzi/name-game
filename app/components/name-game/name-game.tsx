@@ -3,11 +3,17 @@ import { useEffect, useState } from 'react';
 import RICIBs from 'react-individual-character-input-boxes';
 import allowedNames from './allowed-names.json'
 import { toast } from 'react-toastify';
+import { useDisclosure } from '@mantine/hooks';
+import { Modal } from '@mantine/core';
+
 
 
 export const NameGame = ({answer}: {answer: string})=> { 
     const [guesses, setGuesses] = useState<string[]>([])
     const [name, setName] = useState('')
+
+    const [opened, { open, close }] = useDisclosure(false);
+
     
 
     const handleOutput = (guess: string) => {
@@ -22,6 +28,9 @@ export const NameGame = ({answer}: {answer: string})=> {
             document.querySelectorAll('input.current-guess').forEach(d => name += d.value)
             if (event.keyCode === 13 && name.length === 5) {
                 if (allowedNames.includes(name.toUpperCase())) {
+                    if (name.toUpperCase() === answer) {
+                        open()
+                    }
                     setGuesses((guesses)=> guesses.concat(name.toUpperCase()))
                     setName('')
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -40,9 +49,13 @@ export const NameGame = ({answer}: {answer: string})=> {
         return ()=> {
             document.removeEventListener('keydown', handleUserKeyPress)
         }
-    }, [])
+    }, [answer, open])
 
     return <div>
+        <Modal opened={opened} onClose={close} title={`ÞAÐ VAR RÉTT!! 🎉🙌🎊`}>
+            <p>{answer === 'BJÖRN' ? 'Fornafnið hans er Björn!' : 'Millinafnið hans er Natan'}</p>
+            <a href={answer === 'BJÖRN' ? "/name-game/name/second" : "/name-game/name/first"}>{answer === 'BJÖRN' ? 'Giska á millinafn' : 'Giska á fornafni'}</a>
+        </Modal>
         {guesses.map((guess: string, i) => {
             const word = answer.split('')
             return <div key={guess + i}>{
@@ -70,7 +83,7 @@ export const NameGame = ({answer}: {answer: string})=> {
                     width: '45px',
                     height: '45px',
                     margin: '5px',
-                    backgroundColor: correct ? 'green' : isInWord ? 'yellow' : 'unset',
+                    backgroundColor: correct ? 'green' : isInWord ? 'yellow' : '#ccc',
                     borderRadius: '5px',
                     textAlign: 'center',
                     fontSize: '34px',
@@ -94,6 +107,9 @@ export const NameGame = ({answer}: {answer: string})=> {
     />
     <button style={{width: '100%', padding: '10px 20px', backgroundColor: name.length !== 5 ? '#ccc' : '#B2FBA5', borderRadius: '10px', fontSize: '24px', fontWeight: '500', fontFamily: "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial sans-serif",}} disabled={name.length !== 5} onClick={()=> {
         if (allowedNames.includes(name.toUpperCase())) {
+            if (name.toUpperCase() === answer) {
+                open()
+            }
             setGuesses(guesses.concat(name.toUpperCase()))
             setName('')
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

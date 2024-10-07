@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #A3CFFF;
+  --background: #4663AC;
   --foreground: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #A3CFFF;
+    --background: #4663AC;
     --foreground: #000;
   }
 }
@@ -26,6 +26,48 @@ body {
   }
 }
 
-.active {
-  color: red;
+.navigation {
+  font-size: 20px;
+  color: #c1d8f0;
+}
+
+.active, .navigation:hover {
+  color: #e1f1fd;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+div[data-portal="true"] > div {
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 200px);
+  width: 400px;
+  background-color: rgba(254,254,254,0.9);
+  padding: 0;
+
+  button {
+    width: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  a {
+    text-decoration: underline;
+    color: #4663AC;
+  }
+}
+
+.mantine-Modal-inner {
+  padding: 20px;
 }
