@@ -98,8 +98,11 @@ export const NameGame = ({answer}: {answer: string})=> {
         autoFocus
         handleOutputString={handleOutput}
         inputProps={
-        { className: "2fa-box current-guess",
-            style: { "color": "black" },
+        { className: "current-guess",
+            style: { "color": "black", width: '45px', margin: '5px', height: '45px',  borderRadius: '5px',
+                textAlign: 'center',
+                fontSize: '34px',
+                fontFamily: "-apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial sans-serif", },
             placeholder: "_",
         }
         }
